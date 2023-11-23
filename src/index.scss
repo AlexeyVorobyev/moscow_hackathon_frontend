@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+}
+.leaflet-control-attribution a:nth-child(1) {
+  display: none;
+}
+.leaflet-control-attribution span {
+  display: none;
+}
