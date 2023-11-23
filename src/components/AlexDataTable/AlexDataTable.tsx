@@ -1,4 +1,4 @@
-import React, {FC, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {FC, ReactNode, useEffect, useMemo, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,6 +12,7 @@ import {AlexDataTableActions} from "./AlexDataTableActions";
 import {MutationTrigger} from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import {AlexDataTableHeader} from "./AlexDataTableHeader";
 import {AlexDataTableSortWrapper} from "./AlexDataTableSortWrapper";
+
 export interface ICustomDataTableColumn {
     id: string,
     label: string,
@@ -135,7 +136,8 @@ export const AlexDataTable: FC<IProps> = ({
                 <AlexDataTableHeader simpleFilter={simpleFilter} columnsSelect={columnsSelect}
                                      columnsState={columnsState} setColumnsState={setColumnsState}
                                      filterListIds={filterListIds} setServerSideOptions={setServerSideOptions}
-                                     serverSideOptions={serverSideOptions} downloadCSV={downloadCSV} data={data} columns={columns}/>}
+                                     serverSideOptions={serverSideOptions} downloadCSV={downloadCSV} data={data}
+                                     columns={columns}/>}
             {!rows && (<Box sx={{
                 width: '100%',
                 height: '100%',

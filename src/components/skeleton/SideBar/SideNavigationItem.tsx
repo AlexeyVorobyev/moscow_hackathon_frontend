@@ -45,7 +45,7 @@ export const SideNavigationItem: FC<IProps> = ({
                     <ListItemButton onClick={handleClick}
                                     sx={{padding: theme.spacing(1), paddingLeft: theme.spacing(2), height: '48px'}}>
                         <ListItemIcon
-                            sx={{color: !(isContracted && isCurrentLocation) ? undefined : theme.palette.secondary.main}}>
+                            sx={{color: !isCurrentLocation ? undefined : theme.palette.secondary.main}}>
                             {icon || undefined}
                         </ListItemIcon>
                         {name &&

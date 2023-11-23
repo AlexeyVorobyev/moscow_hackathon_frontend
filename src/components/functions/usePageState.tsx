@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom'
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
 export enum EUsePageStateMode {
     queryString = 'QUERY_STRING',
@@ -15,6 +15,11 @@ interface IProps {
     mode?: EUsePageStateMode.queryString | EUsePageStateMode.sessionStorage | EUsePageStateMode.localStorage | EUsePageStateMode.noStorage,
     storageKey?: string
     defaultValue?: TServerSideOptions
+}
+
+export interface IUseServerSideOptions {
+    serverSideOptions: TServerSideOptions
+    setServerSideOptions: React.Dispatch<React.SetStateAction<TServerSideOptions>>
 }
 
 const DEBUG = true

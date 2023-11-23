@@ -1,7 +1,8 @@
 import {ReactNode} from "react";
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import SettingsIcon from '@mui/icons-material/Settings';
 import {EPageType} from "../../pages/СustomizationPage/СustomizationPage";
+import MapIcon from '@mui/icons-material/Map';
+import StorageIcon from '@mui/icons-material/Storage';
 
 export interface ISideNavigationConfig {
     path: string | null,
@@ -12,12 +13,12 @@ export interface ISideNavigationConfig {
 
 
 export const sideNavigationConfig: ISideNavigationConfig[] = [
-    {path: '/mainMap', name: 'Карта', icon: <QueryStatsIcon/>},
+    {path: '/mainMap', name: 'Карта', icon: <MapIcon/>},
 
     {path: '/statistics', name: 'Статистика', icon: <QueryStatsIcon/>},
 
     {
-        path: null, name: 'Реестр', icon: <SettingsIcon/>,
+        path: null, name: 'Реестр', icon: <StorageIcon/>,
         routes: [
             {
                 path: `customization/cameras/${EPageType.table}`,

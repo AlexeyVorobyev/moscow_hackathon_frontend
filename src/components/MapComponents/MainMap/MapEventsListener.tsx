@@ -1,12 +1,10 @@
 import React, {FC, useCallback} from "react";
 import {MapEvents} from "./MapEvents";
-import {TServerSideOptions} from "../../functions/usePageState";
+import {IUseServerSideOptions} from "../../functions/usePageState";
 import {LayersControlEvent} from "leaflet";
 import {CLUSTERS_NAME, GRAYSCALE_NAME} from "./MapRender";
 
-interface IProps {
-    serverSideOptions: TServerSideOptions
-    setServerSideOptions: React.Dispatch<React.SetStateAction<TServerSideOptions>>
+interface IProps extends IUseServerSideOptions {
 }
 
 export const MapEventsListener: FC<IProps> = ({

@@ -1,25 +1,15 @@
 import React, {FC} from "react";
-import {TServerSideOptions} from "../../functions/usePageState";
-import {
-    Circle,
-    FeatureGroup,
-    LayersControl,
-    MapContainer,
-    Pane,
-    ScaleControl,
-    TileLayer,
-    ZoomControl
-} from "react-leaflet";
+import {IUseServerSideOptions, TServerSideOptions} from "../../functions/usePageState";
+import {MapContainer, ScaleControl, ZoomControl} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import {MapBounds} from "./MapBounds";
-import {mapBackground} from "./MapBackground";
 import {MapEventsListener} from "./MapEventsListener";
 import {MapGray} from "./MapGrey";
-import {CONFIG} from "../../../config";
+import {MapTilesPane} from "./MapTilesPane";
+import {FormProvider, useForm} from "react-hook-form";
+import {MapFilters} from "./MapFilters";
 
-interface IProps {
-    serverSideOptions: TServerSideOptions
-    setServerSideOptions: React.Dispatch<React.SetStateAction<TServerSideOptions>>
+interface IProps extends IUseServerSideOptions {
 }
 
 export const GRAYSCALE_NAME: string = 'Затенение'
@@ -29,8 +19,6 @@ export const MapRender: FC<IProps> = ({
                                           serverSideOptions,
                                           setServerSideOptions,
                                       }) => {
-
-    console.log(serverSideOptions)
 
     return (<>
         <MapContainer
@@ -42,6 +30,10 @@ export const MapRender: FC<IProps> = ({
                 height: '100%'
             }}
         >
+            <MapFilters
+                serverSideOptions={serverSideOptions}
+                setServerSideOptions={setServerSideOptions}/>
+
             <MapBounds
                 serverSideOptions={serverSideOptions}
                 setServerSideOptions={setServerSideOptions}/>
@@ -56,31 +48,7 @@ export const MapRender: FC<IProps> = ({
 
             <ZoomControl position="topleft"/>
 
-            <Pane name="tilesPane"
-                  style={{filter: serverSideOptions.get('grayscale') ? `grayscale(${CONFIG.mapGrayscale})` : `grayscale(0%)`}}>
-                <LayersControl position="topleft" collapsed={true}>
-                    {mapBackground.map((mapTile, idx) => (
-                        <LayersControl.BaseLayer key={mapTile.name} name={mapTile.name}
-                                                 checked={serverSideOptions.get('baseLayer') ? mapTile.name === serverSideOptions.get('baseLayer') : idx === 0}>
-                            <TileLayer url={mapTile.url} attribution={mapTile.attribution}/>
-                        </LayersControl.BaseLayer>
-                    ))}
-                    <LayersControl.Overlay name={GRAYSCALE_NAME}
-                                           checked={serverSideOptions.get('grayscale')}>
-                        <FeatureGroup pathOptions={{opacity: 0}}>
-                            <Circle center={serverSideOptions.get('coords')} radius={0}
-                                    interactive={false}/>
-                        </FeatureGroup>
-                    </LayersControl.Overlay>
-                    <LayersControl.Overlay name={CLUSTERS_NAME}
-                                           checked={serverSideOptions.get('clusters')}>
-                        <FeatureGroup pathOptions={{opacity: 0}}>
-                            <Circle center={serverSideOptions.get('coords')} radius={0}
-                                    interactive={false}/>
-                        </FeatureGroup>
-                    </LayersControl.Overlay>
-                </LayersControl>
-            </Pane>
+            <MapTilesPane serverSideOptions={serverSideOptions}/>
         </MapContainer>
     </>)
 }
