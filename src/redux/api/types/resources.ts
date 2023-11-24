@@ -9,5 +9,5 @@ export interface ICoordinates {
 }
 
 export const serializeICoordinatesEntity = (entity:ICoordinates) => {
-    return `${entity.lat} ${entity.lat ? 'c.ш.' : 'ю.ш.'} \ ${entity.lon} ${entity.lon ? 'в.д.' : 'з.д.'}`
+    return `${entity?.lat} ${entity?.lat ? 'c.ш.' : 'ю.ш.'} \ ${entity?.lon} ${entity?.lon ? 'в.д.' : 'з.д.'}`
 }

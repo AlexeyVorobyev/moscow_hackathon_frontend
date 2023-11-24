@@ -4,9 +4,10 @@ import {serializeICoordinatesEntity} from "../../../redux/api/types/resources";
 
 export const CamerasTableColumns: ICustomDataTableColumn[] = [
     {
-        id: 'ID',
-        label: 'id',
-        display: false
+        id: 'id',
+        label: 'ID',
+        display: false,
+        format: (value: ICameraEntity) => Number(value.id)
     },
     {
         id: 'name',

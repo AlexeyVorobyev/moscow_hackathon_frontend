@@ -10,7 +10,7 @@ export interface ICamerasPayload {
 }
 
 export interface ICameraEntity {
-    id:string
+    id:number
     name:string
     address:string
     violationsAmount:number

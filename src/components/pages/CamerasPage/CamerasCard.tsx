@@ -16,7 +16,7 @@ export const CamerasCard: FC = () => {
         isLoading,
         isSuccess
     } = useCameraQuery({id: searchParams.get('id')!})
-    const cameraData = useMemo(() => data as ICameraExpandedEntity, [data])
+    const cameraData = useMemo(() => data?.response as ICameraExpandedEntity, [data])
 
     return (
         <Box sx={{
@@ -42,7 +42,7 @@ export const CamerasCard: FC = () => {
                 <Grid container spacing={theme.spacing(2)}>
                     <Grid item xs={6}>
                         <AlexDataView label={'ID'}>
-                            {cameraData.id}
+                            {cameraData.id.toString()}
                         </AlexDataView>
                     </Grid>
                     <Grid item xs={6}>
@@ -62,7 +62,7 @@ export const CamerasCard: FC = () => {
                     </Grid>
                     <Grid item xs={6}>
                         <AlexDataView label={'Координаты'}>
-                            {serializeICoordinatesEntity(cameraData.coordinates)}
+                            {cameraData.coordinates && serializeICoordinatesEntity(cameraData.coordinates)}
                         </AlexDataView>
                     </Grid>
                 </Grid>
