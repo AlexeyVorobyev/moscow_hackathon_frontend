@@ -1,13 +1,13 @@
-import React, {FC} from "react";
-import {IUseServerSideOptions, TServerSideOptions} from "../../functions/usePageState";
+import React, {FC, useState} from "react";
+import {IUseServerSideOptions} from "../../functions/usePageState";
 import {MapContainer, ScaleControl, ZoomControl} from "react-leaflet";
 import 'leaflet/dist/leaflet.css'
 import {MapBounds} from "./MapBounds";
 import {MapEventsListener} from "./MapEventsListener";
 import {MapGray} from "./MapGrey";
 import {MapTilesPane} from "./MapTilesPane";
-import {FormProvider, useForm} from "react-hook-form";
-import {MapFilters} from "./MapFilters";
+import {MapSearch} from "./MapSearch";
+import {MapFilter} from "./MapFilter";
 
 interface IProps extends IUseServerSideOptions {
 }
@@ -19,6 +19,7 @@ export const MapRender: FC<IProps> = ({
                                           serverSideOptions,
                                           setServerSideOptions,
                                       }) => {
+    const [collapsedFilters, setCollapsedFilters] = useState<boolean>(true)
 
     return (<>
         <MapContainer
@@ -30,9 +31,15 @@ export const MapRender: FC<IProps> = ({
                 height: '100%'
             }}
         >
-            <MapFilters
+            <MapSearch
                 serverSideOptions={serverSideOptions}
-                setServerSideOptions={setServerSideOptions}/>
+                setServerSideOptions={setServerSideOptions}
+                collapsedFilters={collapsedFilters}
+                setCollapsedFilters={setCollapsedFilters}/>
+
+            <MapFilter collapsedFilters={collapsedFilters}
+                       serverSideOptions={serverSideOptions}
+                       setServerSideOptions={setServerSideOptions}/>
 
             <MapBounds
                 serverSideOptions={serverSideOptions}

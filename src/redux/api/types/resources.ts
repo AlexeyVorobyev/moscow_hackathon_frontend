@@ -4,7 +4,7 @@ export enum ESort {
 }
 
 export interface ICoordinates {
-    lat: number,
+    lat: number
     lon: number
 }
 

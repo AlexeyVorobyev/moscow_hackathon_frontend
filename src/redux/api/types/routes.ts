@@ -35,16 +35,16 @@ export interface IRouteEntity {
     id: string
     name: string
     status: `${ERouteStatus}`
-    address: string
     camerasAmount: number
     dateDeparture: string
     dateArrival: string
     wasteType: string
-}
-
-export interface IRouteExpandedEntity extends IRouteEntity {
     points: {
         coordinates: ICoordinates
         name: string
     }[]
+    cameraIds: string[]
+}
+
+export interface IRouteExpandedEntity extends IRouteEntity {
 }

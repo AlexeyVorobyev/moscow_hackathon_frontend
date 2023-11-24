@@ -1,9 +1,9 @@
-import React, {useCallback, useState} from "react";
+import React, {ReactNode, useCallback, useState} from "react";
 import {FormControl, IconButton, InputAdornment, TextField, TextFieldProps, TextFieldVariants} from "@mui/material";
 import {Controller, useFormContext} from "react-hook-form";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 
-interface IProps extends TextFieldProps {
+type TProps = {
     name: string
     defaultValue?: string
     label?: string
@@ -17,12 +17,13 @@ interface IProps extends TextFieldProps {
     multiline?: boolean
     maxRows?: number
     variant?: TextFieldVariants
-}
+    endAdornment?: ReactNode
+} & TextFieldProps
 
 const DEBUG = false
 const DEBUG_PREFIX = 'ALEX_INPUT'
 
-const AlexInput: React.FC<IProps> = ({
+const AlexInput: React.FC<TProps> = ({
                                          name,
                                          defaultValue,
                                          label,
@@ -34,6 +35,7 @@ const AlexInput: React.FC<IProps> = ({
                                          multiline = false,
                                          maxRows,
                                          variant = 'outlined',
+                                         endAdornment,
                                          ...props
                                      }) => {
 
@@ -42,20 +44,30 @@ const AlexInput: React.FC<IProps> = ({
     const [showPassword, setShowPassword] = useState<boolean>(!hidden)
 
     const inputPropsConstructor = useCallback(() => {
-        if (!hidden) return undefined
+        if (endAdornment) {
+            return {
+                endAdornment: (
+                    <InputAdornment position="end">
+                        {endAdornment}
+                    </InputAdornment>
+                ),
+            }
+        }
 
-        return {
-            endAdornment: (
-                <InputAdornment position="end">
-                    <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                        onMouseDown={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? <Visibility/> : <VisibilityOff/>}
-                    </IconButton>
-                </InputAdornment>
-            ),
+        if (hidden) {
+            return {
+                endAdornment: (
+                    <InputAdornment position="end">
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            onMouseDown={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <Visibility/> : <VisibilityOff/>}
+                        </IconButton>
+                    </InputAdornment>
+                ),
+            }
         }
 
     }, [hidden])
