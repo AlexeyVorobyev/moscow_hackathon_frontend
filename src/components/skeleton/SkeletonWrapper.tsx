@@ -5,6 +5,7 @@ import {theme} from "../Theme/theme";
 import {PageWrapper} from "./PageWrapper";
 import {ErrorBoundary} from "./ErrorBoundary/ErrorBoundary";
 import {PROJECT_NAME} from "../../globalVars";
+import headerLogoIcon from './../../assets/logo/headerLogo.svg'
 
 interface IProps {
     children: ReactNode
@@ -23,7 +24,8 @@ export const SkeletonWrapper: FC<IProps> = ({children}) => {
                 position:'relative'
             }}>
                 <Stack alignItems={'center'} direction={'row'} height={'100%'}>
-                    <Typography variant={'h3'} color={theme.palette.primary.contrastText}>{PROJECT_NAME}</Typography>
+                    <img src={headerLogoIcon} alt={PROJECT_NAME}/>
+                    {/*<Typography variant={'h3'} color={theme.palette.primary.contrastText}>{PROJECT_NAME}</Typography>*/}
                 </Stack>
             </Box>
             <Stack height={'calc(100vh - 70px)'} width={'100%'} direction={'row'}>

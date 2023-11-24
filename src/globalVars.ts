@@ -1,1 +1,1 @@
-export const PROJECT_NAME = 'CLEAN&LEAN'
+export const PROJECT_NAME = 'CLEAR VISION'
