@@ -18,7 +18,8 @@ export const CamerasTable: FC = () => {
     } = usePageState({
         varsBehaviorMap: varsBehaviourMapCameras,
         defaultValue: new Map([
-            ['perPage', CONFIG.tablePerPage]
+            ['perPage', CONFIG.tablePerPage],
+            ['page','0']
         ] as [string, any][])
     })
 
@@ -30,10 +31,10 @@ export const CamerasTable: FC = () => {
 
     return (
         <AlexDataTable columns={CamerasTableColumns}
-                       data={result?.currentData?.content}
-                       availablePages={result?.currentData?.totalPages}
+                       data={result?.currentData?.response.response}
+                       availablePages={result?.currentData?.response.pages}
                        perPageOptions={CONFIG.tablePerPageOptions}
-                       availableElements={result?.currentData?.totalElements}
+                       availableElements={result?.currentData?.response.totalElements}
                        columnsSelect simpleFilter footer downloadCSV
                        filterListIds={[]}
                        serverSideOptions={serverSideOptions}

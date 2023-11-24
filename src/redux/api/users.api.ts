@@ -5,14 +5,14 @@ export const usersApi = api.injectEndpoints({
     endpoints: (builder) => ({
         users: builder.query<any, IUsersPayload>({
             query: (settings) => ({
-                url: '/user' + constructQueryString(settings),
+                url: '/userss' + constructQueryString(settings),
                 method: 'GET',
             }),
             providesTags: ['users']
         }),
         user: builder.query<any, { id: string }>({
             query: (settings) => ({
-                url: `/user/${settings.id}`,
+                url: `/userss/${settings.id}`,
                 method: 'GET',
             }),
             providesTags: ['users']

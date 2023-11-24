@@ -1,14 +1,14 @@
-import {useActions} from "../../redux/hooks/useActions";
-import {useEffect} from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "../../redux/store/store";
+import {useActions} from '../../redux/hooks/useActions'
+import {useEffect} from 'react'
+import {useSelector} from 'react-redux'
+import {RootState} from '../../redux/store/store'
 
 export const useLoginStatus = () => {
-
     const {setLogin} = useActions()
-    const user = useSelector((state:RootState) => state.user)
+    const user = useSelector((state: RootState) => state.user)
 
     useEffect(() => {
+        console.log('useLoginStatus')
         if (
             Boolean(localStorage.getItem('accessToken')) &&
             Boolean(localStorage.getItem('refreshToken')) &&
@@ -16,12 +16,11 @@ export const useLoginStatus = () => {
         ) {
             console.log('logged')
             setLogin(true)
-        }
-        else {
+        } else {
             console.log('unlogged')
             setLogin(false)
         }
-    },[user.isAuth])
+    }, [user.isAuth])
 
 }
 

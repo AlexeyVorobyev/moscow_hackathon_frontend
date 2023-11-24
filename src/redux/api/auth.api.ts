@@ -1,34 +1,33 @@
 import {api} from './api'
-import {
-    LoginPayload,
-    LoginResponse,
-} from "./types/auth";
+import {ILoginPayload, ILoginResponse, IRefreshPayload, IRefreshResponse,} from './types/auth'
+
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        auth: builder.mutation<LoginResponse,LoginPayload>({
+        auth: builder.mutation<ILoginResponse, ILoginPayload>({
             query: (body) => ({
-                url:`/auth`,
+                url: `/auth/login`,
                 method: 'POST',
                 headers: {
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body
             }),
         }),
-        me: builder.mutation<any,null>({
-            query: () => ({
-                url:`/me`,
+        refresh: builder.mutation<IRefreshResponse, IRefreshPayload>({
+            query: (body) => ({
+                url: `/auth/refresh`,
                 method: 'POST',
                 headers: {
-                    'authorization':'testdatabase'
-                }
+                    'Content-Type': 'application/json'
+                },
+                body
             }),
-        })
+        }),
     }),
-    overrideExisting:false
+    overrideExisting: false
 })
 
 export const {
     useAuthMutation,
-    useMeMutation
+    useRefreshMutation
 } = authApi

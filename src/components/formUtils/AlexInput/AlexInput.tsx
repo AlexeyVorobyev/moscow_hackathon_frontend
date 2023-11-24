@@ -61,7 +61,6 @@ const AlexInput: React.FC<TProps> = ({
                         <IconButton
                             aria-label="toggle password visibility"
                             onClick={() => setShowPassword(!showPassword)}
-                            onMouseDown={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? <Visibility/> : <VisibilityOff/>}
                         </IconButton>
@@ -70,7 +69,7 @@ const AlexInput: React.FC<TProps> = ({
             }
         }
 
-    }, [hidden])
+    }, [hidden,showPassword])
 
     return (
         <Controller

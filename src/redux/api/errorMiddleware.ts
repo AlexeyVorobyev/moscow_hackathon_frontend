@@ -16,7 +16,7 @@ export const errorMiddleware: Middleware =
             console.log('REJECTED', action)
             if (action.type === 'api/executeMutation/rejected') {
                 const toastPayload = toastSettings.connectionLost
-                toast.error(action.payload.data.message, toastPayload.properties)
+                toast.error(action.payload.data.message || 'Ошибка', toastPayload.properties)
             } else {
                 const toastPayload = toastSettings.connectionLost
                 toast.error(toastPayload.message, toastPayload.properties)

@@ -1,27 +1,27 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {IUniversitiesPayload} from "./types/universities";
-import {ICamerasPayload} from "./types/cameras";
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {ICamerasPayload} from './types/cameras'
+import {getTokens} from '../../components/functions/getAuthToken'
 
 const disabledAuthTokenEndpoints = [
-    'auth',
+    'auth/login',
 ]
 export const api = createApi({
     reducerPath: 'api',
-    tagTypes: ['universities', 'cameras', 'routes', 'violations', 'users','garbages'],
+    tagTypes: ['universities', 'cameras', 'routes', 'violations', 'users', 'garbages'],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_APP_API_HOST,
         prepareHeaders: (headers, api) => {
             if (disabledAuthTokenEndpoints.includes(api.endpoint)) {
                 return headers
             }
-            headers.set('Authorization', `testdatabase`)
+            headers.set('Authorization', `Bearer ${getTokens().accessToken}`)
             return headers
         }
     }),
     endpoints: () => ({})
 })
 
-type TSerializePayload = IUniversitiesPayload | ICamerasPayload
+type TSerializePayload = ICamerasPayload
 
 export const constructQueryString = (config: TSerializePayload): string => {
     let resString = '?'
