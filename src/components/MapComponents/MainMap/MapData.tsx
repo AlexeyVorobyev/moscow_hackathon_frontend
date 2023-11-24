@@ -3,6 +3,7 @@ import {EUsePageStateMode, usePageState} from "../../functions/usePageState";
 import {varsBehaviourMapMainMap} from "./varsBehaviourMapMainMap";
 import {CONFIG} from "../../../config";
 import {MapRender} from "./MapRender";
+import {DEFAULT_VALUES_MAIN_MAP} from '../../../globalVars'
 
 export enum EMainMapLayers {
     cameras = 'cameras',
@@ -19,16 +20,7 @@ export const MapData: FC = () => {
     } = usePageState({
         mode: EUsePageStateMode.queryString,
         varsBehaviorMap: varsBehaviourMapMainMap,
-        defaultValue: new Map([
-            [EMainMapLayers.cameras, true],
-            [EMainMapLayers.routes, false],
-            [EMainMapLayers.garbages, false],
-            ['coords', [CONFIG.defaultMapLat, CONFIG.defaultMapLon]],
-            ['zoom', CONFIG.defaultMapZoom],
-            ['baseLayer', CONFIG.mapLayersConfig[0].name],
-            ['grayscale', false],
-            ['clusters', true]
-        ] as [string, any][])
+        defaultValue: DEFAULT_VALUES_MAIN_MAP
     })
 
     useEffect(() => {

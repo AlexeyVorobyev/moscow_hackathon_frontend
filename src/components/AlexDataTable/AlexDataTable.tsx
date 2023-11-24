@@ -1,22 +1,22 @@
-import React, {FC, ReactNode, useEffect, useMemo, useState} from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import {Box, CircularProgress, Divider, Stack, Typography} from "@mui/material";
-import {AlexDataTableFooter} from "./AlexDataTableFooter";
-import {useNavigate} from "react-router-dom";
-import {AlexDataTableActions} from "./AlexDataTableActions";
-import {MutationTrigger} from "@reduxjs/toolkit/dist/query/react/buildHooks";
-import {AlexDataTableHeader} from "./AlexDataTableHeader";
-import {AlexDataTableSortWrapper} from "./AlexDataTableSortWrapper";
+import React, {FC, ReactNode, useCallback, useEffect, useMemo, useState} from 'react'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import {Box, CircularProgress, Divider, Stack, Typography} from '@mui/material'
+import {AlexDataTableFooter} from './AlexDataTableFooter'
+import {useNavigate} from 'react-router-dom'
+import {AlexDataTableActions} from './AlexDataTableActions'
+import {MutationTrigger} from '@reduxjs/toolkit/dist/query/react/buildHooks'
+import {AlexDataTableHeader} from './AlexDataTableHeader'
+import {AlexDataTableSortWrapper} from './AlexDataTableSortWrapper'
 
 export interface ICustomDataTableColumn {
     id: string,
     label: string,
-    align?: "center" | "left" | "right" | "inherit" | "justify",
+    align?: 'center' | 'left' | 'right' | 'inherit' | 'justify',
     minWidth?: number,
     format?: (value: any) => ReactNode,
     formatText?: (value: any) => string,
@@ -117,14 +117,33 @@ export const AlexDataTable: FC<IProps> = ({
 
     DEBUG && console.log(DEBUG_PREFIX, 'DATA', data)
 
-    const [columnsState, setColumnsState] = useState<ICustomDataTableColumn[]>(
-        sessionStorage.getItem(`columnsDataBase${location.pathname}`)
-            ? JSON.parse(sessionStorage.getItem(`columnsDataBase${location.pathname}`)!) as ICustomDataTableColumn[]
-            : columns
-    )
+    const setDefaultColumnsState = useCallback(() => {
+        const sessionState = sessionStorage.getItem(`columnsDataBase${location.pathname}`)
+        if (!sessionState) {
+            return columns
+        }
+
+        const sessionsStateParsed: boolean[] = JSON.parse(sessionState)
+        if (columns.length !== sessionsStateParsed.length) {
+            return columns
+        }
+
+        return columns.map((column, index) => {
+            return {
+                ...column,
+                display: sessionsStateParsed[index]
+            }
+        })
+
+    }, [])
+
+    const [columnsState, setColumnsState] = useState<ICustomDataTableColumn[]>(setDefaultColumnsState())
 
     useEffect(() => {
-        sessionStorage.setItem(`columnsDataBase${location.pathname}`, JSON.stringify(columnsState))
+        sessionStorage.setItem(
+            `columnsDataBase${location.pathname}`,
+            JSON.stringify(columnsState.map((column) => column.display))
+        )
     }, [columnsState])
 
     const rows = useMemo(() => formatFlatData(columns, data, EFormatFlatDataMode.jsx), [columns, data])
@@ -213,7 +232,7 @@ export const AlexDataTable: FC<IProps> = ({
                                                 : undefined
                                         ]}
                                     </TableRow>
-                                );
+                                )
                             })}
                         </TableBody>
                     </Table>

@@ -1,24 +1,17 @@
-import React from "react";
-import {SkeletonWrapper} from "./components/skeleton/SkeletonWrapper";
-import {RouterComponent} from "./components/Router/RouterComponent";
-import {useLoginStatus} from "./components/functions/useLoginStatus";
-import {routesList} from "./components/Router/routesList";
-import {useSelector} from "react-redux";
-import {RootState} from "./redux/store/store";
-import {AuthPage} from "./components/pages/AuthPage/AuthPage";
-import {routesAuthList} from "./components/Router/routesAuthList";
+import React from 'react'
+import {SkeletonWrapper} from './components/skeleton/SkeletonWrapper'
+import {RouterComponent} from './components/Router/RouterComponent'
+import {useLoginStatus} from './components/functions/useLoginStatus'
+import {routesList} from './components/Router/routesList'
+import {routesAuthList} from './components/Router/routesAuthList'
 
 const App: React.FC = () => {
 
-    useLoginStatus()
-
-    const user = useSelector((state: RootState) => state.user)
-
-    console.log(user.isAuth)
+    const loginStatus = useLoginStatus()
 
     return (
         <>
-            {user.isAuth ?
+            {loginStatus ?
                 <SkeletonWrapper>
                     <RouterComponent routesList={routesList}/>
                 </SkeletonWrapper>

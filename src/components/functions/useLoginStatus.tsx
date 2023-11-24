@@ -1,26 +1,23 @@
-import {useActions} from '../../redux/hooks/useActions'
-import {useEffect} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {RootState} from '../../redux/store/store'
 
 export const useLoginStatus = () => {
-    const {setLogin} = useActions()
-    const user = useSelector((state: RootState) => state.user)
-
-    useEffect(() => {
-        console.log('useLoginStatus')
-        if (
+    const checkStatus = useCallback(() => {
+        return (
             Boolean(localStorage.getItem('accessToken')) &&
             Boolean(localStorage.getItem('refreshToken')) &&
             Boolean(localStorage.getItem('expiry'))
-        ) {
-            console.log('logged')
-            setLogin(true)
-        } else {
-            console.log('unlogged')
-            setLogin(false)
-        }
+        )
+    },[localStorage])
+
+    const [loginStatus,setLoginStatus] = useState<boolean>(checkStatus())
+    const user = useSelector((state: RootState) => state.user)
+
+    useEffect(() => {
+        setLoginStatus(checkStatus())
     }, [user.isAuth])
 
+    return loginStatus
 }
 
