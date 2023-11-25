@@ -14,8 +14,6 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "leaflet.markercluster": "^1.5.3",
-    "react-leaflet-cluster": "^2.1.0",
     "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -32,11 +30,14 @@
     "gh-pages": "^6.0.0",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
+    "leaflet.markercluster": "^1.5.3",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.10",
     "react-hook-form": "^7.47.0",
     "react-leaflet": "^4.2.1",
+    "react-leaflet-cluster": "^2.1.0",
     "react-leaflet-custom-control": "^1.4.0",
     "react-leaflet-draw": "^0.20.4",
     "react-leaflet-enhanced-marker": "^1.0.21",

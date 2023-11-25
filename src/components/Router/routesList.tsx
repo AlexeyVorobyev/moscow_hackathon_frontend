@@ -150,6 +150,22 @@ export const routesList: IRoute[] = [
         name: 'Добавление пользователя',
         component: <CustomizationPageWrapped/>
     },
+
+    {
+        path: `customization/tasks/${EPageType.table}`,
+        name: 'Таблица анализов записей',
+        component: <CustomizationPageWrapped/>
+    },
+    {
+        path: `customization/tasks/${EPageType.view}`,
+        name: 'Просмотр анализа записи',
+        component: <CustomizationPageWrapped/>
+    },
+    {
+        path: `customization/tasks/${EPageType.add}`,
+        name: 'Добавление анализа записи',
+        component: <CustomizationPageWrapped/>
+    },
 ]
 
 const mapRoutesListPaths = (routesList: IRoute[]): string[] => {

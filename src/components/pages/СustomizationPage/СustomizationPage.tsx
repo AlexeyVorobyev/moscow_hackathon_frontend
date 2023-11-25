@@ -18,6 +18,9 @@ import {useGarbageDeleteMutation} from '../../../redux/api/garbages.api'
 import {GarbagesTable} from '../GarbagesPage/GarbagesTable'
 import {GarbagesCard} from '../GarbagesPage/GarbagesCard'
 import {GarbagesForm} from '../GarbagesPage/GarbagesForm'
+import {TasksTable} from '../TasksPage/TasksTable'
+import {TasksCard} from '../TasksPage/TasksCard'
+import {TasksForm} from '../TasksPage/TasksForm'
 
 export enum EPageType {
     edit = 'edit',
@@ -56,7 +59,7 @@ export const CustomizationPage: FC = () => {
                     title: 'маршрутов',
                 },
                 [EPageType.view]: {
-                    component: <RoutesCard/>,
+                    component: RoutesCard,
                     button: 'маршрут'
                 },
             }
@@ -68,7 +71,7 @@ export const CustomizationPage: FC = () => {
                     title: 'нарушений',
                 },
                 [EPageType.view]: {
-                    component: <ViolationsCard/>,
+                    component: ViolationsCard,
                     button: 'нарушение'
                 },
             }
@@ -80,7 +83,7 @@ export const CustomizationPage: FC = () => {
                     title: 'пользователей',
                 },
                 [EPageType.view]: {
-                    component: <UsersCard/>,
+                    component: UsersCard,
                     button: 'пользователь'
                 },
             }
@@ -103,7 +106,7 @@ export const CustomizationPage: FC = () => {
                     button: 'новую свалку'
                 },
                 [EPageType.view]: {
-                    component: <GarbagesCard/>,
+                    component: GarbagesCard,
                     button: 'свалка'
                 },
                 [EPageType.add]: {
@@ -116,6 +119,21 @@ export const CustomizationPage: FC = () => {
                 },
             }
         ],
+        ['tasks', {
+            [EPageType.table]: {
+                component: <TasksTable/>,
+                title: 'анализов записей',
+                button: 'новый анализ записи'
+            },
+            [EPageType.view]: {
+                component: TasksCard,
+                button: 'анализ записи'
+            },
+            [EPageType.add]: {
+                component: TasksForm,
+                title: 'анализ записи'
+            },
+        }]
     ]), [searchParams])
 
     const SwitchRender = useCallback(() => {

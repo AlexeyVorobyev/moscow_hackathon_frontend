@@ -7,7 +7,7 @@ const disabledAuthTokenEndpoints = [
 ]
 export const api = createApi({
     reducerPath: 'api',
-    tagTypes: ['universities', 'cameras', 'routes', 'violations', 'users', 'garbages'],
+    tagTypes: ['universities', 'cameras', 'routes', 'violations', 'users', 'garbages', 'tasks'],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_APP_API_HOST,
         prepareHeaders: (headers, api) => {
