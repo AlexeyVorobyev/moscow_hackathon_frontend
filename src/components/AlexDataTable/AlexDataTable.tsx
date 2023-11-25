@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow'
 import {Box, CircularProgress, Divider, Stack, Typography} from '@mui/material'
 import {AlexDataTableFooter} from './AlexDataTableFooter'
 import {useNavigate} from 'react-router-dom'
-import {AlexDataTableActions} from './AlexDataTableActions'
+import {AlexDataTableActions, ICustomActionCallBackPayload} from './AlexDataTableActions'
 import {MutationTrigger} from '@reduxjs/toolkit/dist/query/react/buildHooks'
 import {AlexDataTableHeader} from './AlexDataTableHeader'
 import {AlexDataTableSortWrapper} from './AlexDataTableSortWrapper'
@@ -33,6 +33,12 @@ export interface IActionConfig {
     params: URLSearchParams
 }
 
+export interface IActionCustomConfig {
+    columnName: string
+    title: string
+    function: (callbackPayload: ICustomActionCallBackPayload) => void
+}
+
 export interface IActionsConfig {
     view?: IActionConfig,
     edit?: IActionConfig
@@ -40,6 +46,9 @@ export interface IActionsConfig {
         columnName: string // номер столбца для использования в роли id
         mutation: MutationTrigger<any>// useMutation из RTK
         showModal?: boolean // показывать ли модальное окно для удаления, по дефолту есть
+    }
+    custom?: {
+        [key: string]: IActionCustomConfig
     }
 }
 
@@ -227,7 +236,7 @@ export const AlexDataTable: FC<IProps> = ({
                                             }),
                                             actionsConfig ?
                                                 (<TableCell key={'actions'} align={'left'}>
-                                                    <AlexDataTableActions actionsConfig={actionsConfig} row={row}/>
+                                                    <AlexDataTableActions actionsConfig={actionsConfig} row={row} rawData={data}/>
                                                 </TableCell>)
                                                 : undefined
                                         ]}

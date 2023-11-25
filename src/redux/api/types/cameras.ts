@@ -1,4 +1,4 @@
-import {ESort, ICoordinates} from "./resources";
+import {ESort, ICoordinates} from './resources'
 
 export interface ICamerasPayload {
     filter?: string
@@ -10,11 +10,11 @@ export interface ICamerasPayload {
 }
 
 export interface ICameraEntity {
-    id:number
-    name:string
-    address:string
-    violationsAmount:number
-    coordinates:ICoordinates
+    id: number
+    name: string
+    address: string
+    violationsAmount: number
+    coordinates: ICoordinates
 }
 
 export interface ICameraExpandedEntity extends ICameraEntity {

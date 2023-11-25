@@ -1,25 +1,26 @@
-import React, {FC, useEffect, useRef} from "react";
-import {IUseServerSideOptions} from "../../functions/usePageState";
-import {FormProvider, useForm} from "react-hook-form";
-import {Box, Divider, Stack, Typography} from "@mui/material";
-import {theme} from "../../Theme/theme";
-import {grey} from '@mui/material/colors';
-import {useDebounce} from "../../functions/useDebounce";
-import L from "leaflet";
-import Control from "react-leaflet-custom-control";
-import Checkbox from "@mui/material/Checkbox";
-import {EMainMapLayers} from "./MapData";
+import React, {FC, ReactNode, useEffect, useRef} from 'react'
+import {IUseServerSideOptions} from '../../functions/usePageState'
+import {FormProvider, useForm} from 'react-hook-form'
+import {Box, Divider, Stack, Typography} from '@mui/material'
+import {theme} from '../../Theme/theme'
+import {grey} from '@mui/material/colors'
+import {useDebounce} from '../../functions/useDebounce'
+import L from 'leaflet'
+import Checkbox from '@mui/material/Checkbox'
+import {EMainMapLayers} from './MapData'
 
 interface IProps extends IUseServerSideOptions {
     collapsedFilters: boolean
+    popupElement: ReactNode
 }
 
 export const MapFilter: FC<IProps> = ({
                                           serverSideOptions,
                                           setServerSideOptions,
                                           collapsedFilters,
+                                          popupElement
                                       }) => {
-    const methods = useForm({mode: "all"})
+    const methods = useForm({mode: 'all'})
     const {watch} = methods
 
     const debouncedSetServerSideOptions = useDebounce(setServerSideOptions, 800)
@@ -43,13 +44,26 @@ export const MapFilter: FC<IProps> = ({
 
     return (
         <FormProvider {...methods}>
-            <Box sx={{
+            <Stack sx={{
                 width: '100%',
                 height: '100%',
                 display: 'flex',
                 justifyContent: 'end',
-                alignItems: 'start',
-            }}>
+            }} direction={'row'}>
+                <Box sx={{
+                    display:'flex',
+                    top:theme.spacing(12),
+                    paddingBottom:theme.spacing(2),
+                    paddingRight:theme.spacing(2),
+                    position:'relative',
+                    zIndex:1000,
+                    width:'fitContent',
+                    height:`calc(100% - ${theme.spacing(12)})`,
+                    flexDirection:'row',
+                    boxSizing:'border-box'
+                }}>
+                    {popupElement}
+                </Box>
                 <Box sx={{
                     height: '100%',
                     background: grey['50'],
@@ -111,7 +125,7 @@ export const MapFilter: FC<IProps> = ({
                         </Stack>
                     </Stack>
                 </Box>
-            </Box>
+            </Stack>
         </FormProvider>
     )
 }

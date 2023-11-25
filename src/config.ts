@@ -9,13 +9,17 @@ interface I_CONFIG {
     tablePerPage: string
     tablePerPageOptions: string[]
     mapLayersConfig: IMapBackground[]
+    mapMaxZoom:number
+    mapMinZoom:number
 }
 
 export const CONFIG: I_CONFIG = {
-    mapBoundsDebounce: Number(import.meta.env.VITE_APP_MAP_BOUNDS_DEBOUNCE) || 500,
+    mapBoundsDebounce: Number(import.meta.env.VITE_APP_MAP_BOUNDS_DEBOUNCE) || 800,
     defaultMapLat: Number(import.meta.env.VITE_APP_DEFAULT_MAP_LAT) || 45,
     defaultMapLon: Number(import.meta.env.VITE_APP_DEFAULT_MAP_LON) || 45,
     defaultMapZoom: Number(import.meta.env.VITE_APP_DEFAULT_MAP_ZOOM) || 8,
+    mapMaxZoom: Number(import.meta.env.VITE_APP_MAX_MAP_ZOOM) || 15,
+    mapMinZoom: Number(import.meta.env.VITE_APP_MIN_MAP_ZOOM) || 2,
     mapGrayscale: Number(import.meta.env.VITE_APP_MAP_GRAYSCALE) || 1,
     tablePerPage: import.meta.env.VITE_APP_TABLE_PERPAGE || '10',
     tablePerPageOptions: import.meta.env.VITE_APP_TABLE_PERPAGE_OPTIONS.split(',') || ['1', '2', '5', '10', '20', '40', '60', '100', '200', '1000'],

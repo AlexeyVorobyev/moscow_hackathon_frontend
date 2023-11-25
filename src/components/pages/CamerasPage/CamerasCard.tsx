@@ -1,13 +1,19 @@
-import {FC, useMemo} from "react";
-import {useSearchParams} from "react-router-dom";
-import {Box, CircularProgress, Grid} from "@mui/material";
-import {theme} from "../../Theme/theme";
-import {AlexDataView} from "../../formUtils/AlexDataView/AlexDataView";
-import {useCameraQuery} from "../../../redux/api/cameras.api";
-import {ICameraEntity, ICameraExpandedEntity} from "../../../redux/api/types/cameras";
-import {serializeICoordinatesEntity} from "../../../redux/api/types/resources";
+import React, {FC, ReactNode, useCallback, useLayoutEffect, useMemo} from 'react'
+import {useNavigate, useSearchParams} from 'react-router-dom'
+import {Box, Button, CircularProgress, Grid, Typography} from '@mui/material'
+import {theme} from '../../Theme/theme'
+import {AlexDataView} from '../../formUtils/AlexDataView/AlexDataView'
+import {useCameraQuery} from '../../../redux/api/cameras.api'
+import {ICameraExpandedEntity} from '../../../redux/api/types/cameras'
+import {ICoordinates, serializeICoordinatesEntity} from '../../../redux/api/types/resources'
 
-export const CamerasCard: FC = () => {
+interface IProps {
+    setCustomController: React.Dispatch<React.SetStateAction<ReactNode>>
+}
+
+export const CamerasCard: FC<IProps> = ({
+                                            setCustomController
+                                        }) => {
     const [searchParams] = useSearchParams()
 
     const {
@@ -17,6 +23,31 @@ export const CamerasCard: FC = () => {
         isSuccess
     } = useCameraQuery({id: searchParams.get('id')!})
     const cameraData = useMemo(() => data?.response as ICameraExpandedEntity, [data])
+
+    const navigate = useNavigate()
+
+    const navigateToMapComponent = useCallback(() => (
+        <Button variant={'contained'}
+                onClick={() => {
+                    const searchParams = new URLSearchParams([
+                        ['coords', JSON.stringify([cameraData.coordinates.lat, cameraData.coordinates.lon])],
+                        ['toOpen', cameraData.id],
+                        ['zoom', '10'],
+                        ['cameras', true]
+                    ] as [string, any][])
+                    navigate(`/mainMap?${searchParams.toString()}`)
+                }}>
+            <Typography variant={'button'}>Просмортеть на карте</Typography>
+        </Button>
+    ), [cameraData])
+
+    useLayoutEffect(() => {
+        if (cameraData) {
+            setCustomController(
+                navigateToMapComponent()
+            )
+        }
+    }, [cameraData])
 
     return (
         <Box sx={{
@@ -57,7 +88,7 @@ export const CamerasCard: FC = () => {
                     </Grid>
                     <Grid item xs={6}>
                         <AlexDataView label={'Количество нарушений'}>
-                            {cameraData.violationsAmount}
+                            {cameraData.violationsAmount?.toString()}
                         </AlexDataView>
                     </Grid>
                     <Grid item xs={6}>

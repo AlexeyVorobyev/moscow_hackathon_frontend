@@ -1,23 +1,23 @@
-import {FC, useCallback, useMemo, useState} from "react";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {Box, Button, Divider, Stack, Typography} from "@mui/material";
-import {theme} from "../../Theme/theme";
-import {LinkRouterWrapper} from "../../LinkRouterWrapper/LinkRouterWrapper";
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import {AlexDialogButton} from "../../AlexDialog/AlexDialogButton";
-import {FormProvider, useForm} from "react-hook-form";
-import {CamerasTable} from "../CamerasPage/CamerasTable";
-import {CamerasCard} from "../CamerasPage/CamerasCard";
-import {RoutesTable} from "../RoutesPage/RoutesTable";
-import {RoutesCard} from "../RoutesPage/RoutesCard";
-import {ViolationsTable} from "../ViolationsPage/ViolationsTable";
-import {ViolationsCard} from "../ViolationsPage/ViolationsCard";
-import {UsersCard} from "../UsersPage/UsersCard";
-import {UsersTable} from "../UsersPage/UsersTable";
-import {useGarbageDeleteMutation} from "../../../redux/api/garbages.api";
-import {GarbagesTable} from "../GarbagesPage/GarbagesTable";
-import {GarbagesCard} from "../GarbagesPage/GarbagesCard";
-import {GarbagesForm} from "../GarbagesPage/GarbagesForm";
+import {FC, ReactNode, useCallback, useMemo, useState} from 'react'
+import {useLocation, useNavigate, useSearchParams} from 'react-router-dom'
+import {Box, Button, Divider, Stack, Typography} from '@mui/material'
+import {theme} from '../../Theme/theme'
+import {LinkRouterWrapper} from '../../LinkRouterWrapper/LinkRouterWrapper'
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
+import {AlexDialogButton} from '../../AlexDialog/AlexDialogButton'
+import {FormProvider, useForm} from 'react-hook-form'
+import {CamerasTable} from '../CamerasPage/CamerasTable'
+import {CamerasCard} from '../CamerasPage/CamerasCard'
+import {RoutesTable} from '../RoutesPage/RoutesTable'
+import {RoutesCard} from '../RoutesPage/RoutesCard'
+import {ViolationsTable} from '../ViolationsPage/ViolationsTable'
+import {ViolationsCard} from '../ViolationsPage/ViolationsCard'
+import {UsersCard} from '../UsersPage/UsersCard'
+import {UsersTable} from '../UsersPage/UsersTable'
+import {useGarbageDeleteMutation} from '../../../redux/api/garbages.api'
+import {GarbagesTable} from '../GarbagesPage/GarbagesTable'
+import {GarbagesCard} from '../GarbagesPage/GarbagesCard'
+import {GarbagesForm} from '../GarbagesPage/GarbagesForm'
 
 export enum EPageType {
     edit = 'edit',
@@ -44,7 +44,7 @@ export const CustomizationPage: FC = () => {
                     title: 'камер',
                 },
                 [EPageType.view]: {
-                    component: <CamerasCard/>,
+                    component: CamerasCard,
                     button: 'камера'
                 },
             }
@@ -121,61 +121,70 @@ export const CustomizationPage: FC = () => {
     const SwitchRender = useCallback(() => {
         switch (pageState) {
             case EPageType.view:
+                const [customController, setCustomController] = useState<ReactNode | null>(null)
+                const View = (customizationWrapperPageNameMap.get(namespace)!)[pageState].component as FC<any>
                 return (<>
-                    <Stack direction={'row'} spacing={theme.spacing(2)} padding={theme.spacing(2)}
-                           justifyContent={'flex-end'} useFlexGap>
-                        <LinkRouterWrapper to={-1} useNavigateProp sx={{marginRight: 'auto'}}>
-                            <Button variant={'contained'} startIcon={<KeyboardReturnIcon/>}>
-                                <Typography
-                                    variant={'button'}>Назад</Typography>
-                            </Button>
-                        </LinkRouterWrapper>
-                        {customizationWrapperPageNameMap.get(namespace)!.deleteQuery && (<AlexDialogButton
-                            button={
-                                <Button variant={'contained'} color={'error'}>
+                    <Stack height={'100%'} width={'100%'} direction={'column'}>
+                        <Stack direction={'row'} spacing={theme.spacing(2)} padding={theme.spacing(2)}
+                               justifyContent={'flex-end'} useFlexGap>
+                            <LinkRouterWrapper to={-1} useNavigateProp sx={{marginRight: 'auto'}}>
+                                <Button variant={'contained'} startIcon={<KeyboardReturnIcon/>}>
                                     <Typography
-                                        variant={'button'}>Удалить {(customizationWrapperPageNameMap.get(namespace)!)[pageState].button}</Typography>
+                                        variant={'button'}>Назад</Typography>
                                 </Button>
-                            }
-                            dialog={{
-                                title: 'Подтвердите удаление',
-                                body: (
-                                    <Stack direction={'row'} spacing={theme.spacing(2)} padding={theme.spacing(2)}>
-                                        <Button
-                                            id={'confirmButton'}
-                                            sx={{width: '140px'}}
-                                            color={'error'}
-                                            variant={'contained'}>
-                                            <Typography variant={'button'}
-                                                        color={theme.palette.error.contrastText}>Удалить</Typography>
-                                        </Button>
-                                        <Button
-                                            id={'cancelButton'}
-                                            sx={{width: '140px'}}
-                                            color={'neutral'}
-                                            variant={'outlined'}>
-                                            <Typography variant={'button'}
-                                                        color={theme.palette.neutral.notContrastText}>Отмена</Typography>
-                                        </Button>
-                                    </Stack>
-                                ),
-                                functionsAssign: {
-                                    'cancelButton': {
-                                        close: true
-                                    },
-                                    'confirmButton': {
-                                        close: true,
-                                        function: () => customizationWrapperPageNameMap.get(namespace)!.deleteQuery!(searchParams.get('id')!)
-                                    }
+                            </LinkRouterWrapper>
+                            {customController}
+                            {customizationWrapperPageNameMap.get(namespace)!.deleteQuery && (<AlexDialogButton
+                                button={
+                                    <Button variant={'contained'} color={'error'}>
+                                        <Typography
+                                            variant={'button'}>Удалить {(customizationWrapperPageNameMap.get(namespace)!)[pageState].button}</Typography>
+                                    </Button>
                                 }
-                            }}/>)}
-                        {customizationWrapperPageNameMap.get(namespace)![EPageType.edit] && (
-                            <LinkRouterWrapper to={`./../edit?id=${searchParams.get('id')}`}>
-                                <Button variant={'contained'}>
-                                    <Typography
-                                        variant={'button'}>Редактировать {(customizationWrapperPageNameMap.get(namespace)!)[pageState].button}</Typography>
-                                </Button>
-                            </LinkRouterWrapper>)}
+                                dialog={{
+                                    title: 'Подтвердите удаление',
+                                    body: (
+                                        <Stack direction={'row'} spacing={theme.spacing(2)} padding={theme.spacing(2)}>
+                                            <Button
+                                                id={'confirmButton'}
+                                                sx={{width: '140px'}}
+                                                color={'error'}
+                                                variant={'contained'}>
+                                                <Typography variant={'button'}
+                                                            color={theme.palette.error.contrastText}>Удалить</Typography>
+                                            </Button>
+                                            <Button
+                                                id={'cancelButton'}
+                                                sx={{width: '140px'}}
+                                                color={'neutral'}
+                                                variant={'outlined'}>
+                                                <Typography variant={'button'}
+                                                            color={theme.palette.neutral.notContrastText}>Отмена</Typography>
+                                            </Button>
+                                        </Stack>
+                                    ),
+                                    functionsAssign: {
+                                        'cancelButton': {
+                                            close: true
+                                        },
+                                        'confirmButton': {
+                                            close: true,
+                                            function: () => customizationWrapperPageNameMap.get(namespace)!.deleteQuery!(searchParams.get('id')!)
+                                        }
+                                    }
+                                }}/>)}
+                            {customizationWrapperPageNameMap.get(namespace)![EPageType.edit] && (
+                                <LinkRouterWrapper to={`./../edit?id=${searchParams.get('id')}`}>
+                                    <Button variant={'contained'}>
+                                        <Typography
+                                            variant={'button'}>Редактировать {(customizationWrapperPageNameMap.get(namespace)!)[pageState].button}</Typography>
+                                    </Button>
+                                </LinkRouterWrapper>)}
+                        </Stack>
+                        <Divider/>
+                        <Box sx={{display: 'flex', flex: 1, height: 0}}>
+                            <View setCustomController={setCustomController}/>
+                        </Box>
                     </Stack>
                 </>)
             case EPageType.add:
@@ -231,7 +240,7 @@ export const CustomizationPage: FC = () => {
     }, [pageState, location, namespace, searchParams])
 
     return (<>
-        {pageState === EPageType.add || pageState === EPageType.edit
+        {pageState === EPageType.add || pageState === EPageType.edit || pageState === EPageType.view
             ? <SwitchRender/>
             : (
                 <Stack height={'100%'} width={'100%'} direction={'column'}>

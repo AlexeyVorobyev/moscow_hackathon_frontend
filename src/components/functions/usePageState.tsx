@@ -22,6 +22,11 @@ export interface IUseServerSideOptions {
     setServerSideOptions: React.Dispatch<React.SetStateAction<TServerSideOptions>>
 }
 
+export interface IUseServerSideOptionsConditionally {
+    serverSideOptions?: TServerSideOptions
+    setServerSideOptions?: React.Dispatch<React.SetStateAction<TServerSideOptions>>
+}
+
 const DEBUG = true
 const replacer = (key: string, value: any) => {
     if (value instanceof Map) {

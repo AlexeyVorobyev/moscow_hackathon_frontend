@@ -1,19 +1,27 @@
-import React, {FC, useCallback, useState} from "react";
-import {IActionsConfig, ICustomDataTableRow} from "./AlexDataTable";
-import {Button, IconButton, Popover, Stack, Typography} from "@mui/material";
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import {theme} from "../Theme/theme";
-import {useNavigate} from "react-router-dom";
-import {AlexDialog} from "../AlexDialog/AlexDialog";
+import React, {FC, useCallback, useState} from 'react'
+import {IActionsConfig, ICustomDataTableRow} from './AlexDataTable'
+import {Button, IconButton, Popover, Stack, Typography} from '@mui/material'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import {theme} from '../Theme/theme'
+import {useNavigate} from 'react-router-dom'
+import {AlexDialog} from '../AlexDialog/AlexDialog'
 
 interface IProps {
     actionsConfig: IActionsConfig
     row: ICustomDataTableRow
+    rawData: any[]
+}
+
+export interface ICustomActionCallBackPayload {
+    id: string
+    rowData: ICustomDataTableRow
+    rawData: any[]
 }
 
 export const AlexDataTableActions: FC<IProps> = ({
                                                      actionsConfig,
                                                      row,
+                                                     rawData
                                                  }) => {
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
@@ -85,6 +93,23 @@ export const AlexDataTableActions: FC<IProps> = ({
                             }}>
                             <Typography variant={'button'} color={theme.palette.error.contrastText}>Удалить</Typography>
                         </Button>)}
+                    {Object.values(actionsConfig.custom || {}).map((action) => {
+                        return (
+                            <Button
+                                variant={'text'}
+                                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                                    event.stopPropagation()
+                                    action.function({
+                                        id: row.get(action.columnName),
+                                        rowData: row,
+                                        rawData: rawData
+                                    } as ICustomActionCallBackPayload)
+                                }}>
+                                <Typography variant={'button'}
+                                            color={theme.palette.text.primary}>{action.title}</Typography>
+                            </Button>
+                        )
+                    })}
                 </Stack>
             </Popover>
             {actionsConfig.delete?.showModal &&

@@ -1,9 +1,10 @@
-import {FC, useEffect} from "react";
-import {EUsePageStateMode, usePageState} from "../../functions/usePageState";
-import {varsBehaviourMapMainMap} from "./varsBehaviourMapMainMap";
-import {CONFIG} from "../../../config";
-import {MapRender} from "./MapRender";
+import {FC, useEffect, useMemo, useState} from 'react'
+import {EUsePageStateMode, usePageState} from '../../functions/usePageState'
+import {varsBehaviourMapMainMap} from './varsBehaviourMapMainMap'
+import {MapRender} from './MapRender'
 import {DEFAULT_VALUES_MAIN_MAP} from '../../../globalVars'
+import {useLazyCamerasQuery} from '../../../redux/api/cameras.api'
+import {ICameraEntity} from '../../../redux/api/types/cameras'
 
 export enum EMainMapLayers {
     cameras = 'cameras',
@@ -23,13 +24,37 @@ export const MapData: FC = () => {
         defaultValue: DEFAULT_VALUES_MAIN_MAP
     })
 
+    const [lazyGetCameras, queryDataCameras] = useLazyCamerasQuery()
+
+    const lazyGetCamerasPayload = useMemo(() => {
+        return {
+            page: 0,
+            size: 100000,
+            ...(variables.filter && {filter: variables.filter}),
+            bounds: JSON.stringify(variables.bounds)
+        }
+    }, [variables.filter, variables.bounds])
+
     useEffect(() => {
-        variables && console.debug('VARIABLES_TO_QUERY', variables)
-    }, [variables])
+        console.warn('here')
+        if (serverSideOptions.get('cameras')) {
+            lazyGetCameras(lazyGetCamerasPayload)
+        }
+    }, [lazyGetCamerasPayload, serverSideOptions.get('cameras')])
+
+    const [dataCameras, setDataCameras] = useState<ICameraEntity[] | null>(null)
+
+    useEffect(() => {
+        if (queryDataCameras?.currentData?.response.response) {
+            setDataCameras(queryDataCameras?.currentData?.response.response)
+        }
+    }, [queryDataCameras])
 
     return (
         <MapRender
             serverSideOptions={serverSideOptions}
-            setServerSideOptions={setServerSideOptions}/>
+            setServerSideOptions={setServerSideOptions}
+            dataCameras={dataCameras || []}
+        />
     )
 }

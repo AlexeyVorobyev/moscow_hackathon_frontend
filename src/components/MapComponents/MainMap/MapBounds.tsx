@@ -5,6 +5,15 @@ import {CONFIG} from "../../../config";
 import {useDebounce} from "../../functions/useDebounce";
 import {MapEvents} from "./MapEvents";
 
+interface ICoordinates {
+    lat: number
+    lon: number
+}
+export interface IMapBounds {
+    northEast: ICoordinates,
+    southWest: ICoordinates
+}
+
 interface IProps extends IUseServerSideOptions {
 }
 
