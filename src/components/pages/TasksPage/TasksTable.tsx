@@ -32,7 +32,7 @@ export const TasksTable: FC = () => {
 
     return (
         <AlexDataTable columns={TasksTableColumns}
-                       data={result?.currentData?.response.response || [{id:1}]}
+                       data={result?.currentData?.response.response}
                        availablePages={result?.currentData?.response.pages}
                        perPageOptions={CONFIG.tablePerPageOptions}
                        availableElements={result?.currentData?.response.totalElements}
@@ -48,15 +48,15 @@ export const TasksTable: FC = () => {
                                    ['from', JSON.stringify(location.pathname + location.search)]
                                ])
                            },
-                           custom: {
-                               viewMap: {
-                                   columnName: 'id',
-                                   title: 'Перезапустить',
-                                   function: (args) => {
-                                       const {id} = args
-                                   }
-                               }
-                           }
+                           // custom: {
+                           //     viewMap: {
+                           //         columnName: 'id',
+                           //         title: 'Перезапустить',
+                           //         function: (args) => {
+                           //             const {id} = args
+                           //         }
+                           //     }
+                           // }
                        }}/>
     )
 }

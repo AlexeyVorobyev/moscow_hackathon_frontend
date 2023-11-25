@@ -10,7 +10,14 @@ export interface ITasksPayload {
 }
 
 export interface ITaskEntity {
-    id: string
+    id: number
+    "originalName": string,
+    "path": string,
+    "result": string,
+    "uuid": string,
+    "dateCreate": string,
+    "isVideo": true,
+    "taskStatus": string
 }
 
 export interface ITaskExpandedEntity extends ITaskEntity {

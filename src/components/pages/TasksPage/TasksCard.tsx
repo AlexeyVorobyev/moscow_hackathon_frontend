@@ -42,7 +42,27 @@ export const TasksCard: FC = () => {
                 <Grid container spacing={theme.spacing(2)}>
                     <Grid item xs={6}>
                         <AlexDataView label={'ID'}>
-                            {taskData.id}
+                            {taskData.id.toString()}
+                        </AlexDataView>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <AlexDataView label={'Дата создания'}>
+                            {taskData.dateCreate}
+                        </AlexDataView>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <AlexDataView label={'Название'}>
+                            {taskData.originalName.toString()}
+                        </AlexDataView>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <AlexDataView label={'Видео'}>
+                            {taskData.isVideo ? 'Да' : 'Нет'}
+                        </AlexDataView>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <AlexDataView label={'статус'}>
+                            {taskData.taskStatus === 'IN_PROCESSED' ? 'В процессе' : 'Завершено'}
                         </AlexDataView>
                     </Grid>
                 </Grid>
