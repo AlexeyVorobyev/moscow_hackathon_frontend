@@ -23,9 +23,9 @@ export const tasksApi = api.injectEndpoints({
                 url: `/video/process`,
                 method: 'POST',
                 body: settings.body,
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                // headers: {
+                //     'Content-Type': 'multipart/form-data'
+                // }
             }),
             invalidatesTags: ['task']
         }),

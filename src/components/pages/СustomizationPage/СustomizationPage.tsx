@@ -127,11 +127,11 @@ export const CustomizationPage: FC = () => {
             },
             [EPageType.view]: {
                 component: TasksCard,
-                button: 'анализ записи'
+                button: 'анализа записи'
             },
             [EPageType.add]: {
                 component: TasksForm,
-                title: 'анализ записи'
+                title: 'анализа записи'
             },
         }]
     ]), [searchParams])
