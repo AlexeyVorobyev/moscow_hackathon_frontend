@@ -36,7 +36,7 @@ export const TasksTable: FC = () => {
                        availablePages={result?.currentData?.response.pages}
                        perPageOptions={CONFIG.tablePerPageOptions}
                        availableElements={result?.currentData?.response.totalElements}
-                       columnsSelect simpleFilter footer downloadCSV
+                       columnsSelect footer downloadCSV
                        filterListIds={[]}
                        serverSideOptions={serverSideOptions}
                        setServerSideOptions={setServerSideOptions}

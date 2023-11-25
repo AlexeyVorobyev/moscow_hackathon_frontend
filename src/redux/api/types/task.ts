@@ -18,6 +18,5 @@ export interface ITaskExpandedEntity extends ITaskEntity {
 }
 
 export interface ITaskPostPutPayload {
-    id: string
     file: File
 }

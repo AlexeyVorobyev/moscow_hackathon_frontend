@@ -6,25 +6,28 @@ export const tasksApi = api.injectEndpoints({
     endpoints: (builder) => ({
         tasks: builder.query<any, ITasksPayload>({
             query: (settings) => ({
-                url: '/tasks' + constructQueryString(settings),
+                url: '/task' + constructQueryString(settings),
                 method: 'GET',
             }),
-            providesTags: ['tasks']
+            providesTags: ['task']
         }),
         task: builder.query<any, { id: string }>({
             query: (settings) => ({
-                url: `/tasks/${settings.id}`,
+                url: `/task/${settings.id}`,
                 method: 'GET',
             }),
-            providesTags: ['tasks']
+            providesTags: ['task']
         }),
         tasksPost: builder.mutation<any, { body: ITaskPostPutPayload }>({
             query: (settings) => ({
-                url: `/tasks`,
+                url: `/video/process`,
                 method: 'POST',
-                body: settings.body
+                body: settings.body,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             }),
-            invalidatesTags: ['tasks']
+            invalidatesTags: ['task']
         }),
     }),
     overrideExisting: false

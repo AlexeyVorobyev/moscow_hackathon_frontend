@@ -29,25 +29,26 @@ export const TasksForm: FC<IProps> = ({
     const [addTask] = useTasksPostMutation()
     const navigate = useNavigate()
 
-    const add = (data: ITaskPostPutPayload) => {
+    const add = (data: any) => {
         DEBUG && console.log(DEBUG_PREFIX, 'data ADD', data)
-        // addTask({body: data})
-        //     .then((response) => {
-        //         console.log(DEBUG_PREFIX, 'promise response', response)
-        //         if (searchParams.get('from')) {
-        //             navigate(JSON.parse(searchParams.get('from')!))
-        //         } else {
-        //             navigate('./../table')
-        //         }
-        //     })
+        addTask({body: data})
+            .then((response) => {
+                console.log(DEBUG_PREFIX, 'promise response', response)
+                if (searchParams.get('from')) {
+                    navigate(JSON.parse(searchParams.get('from')!))
+                } else {
+                    navigate('./../table')
+                }
+            })
     }
 
     const onSubmit = (data: any) => {
         DEBUG && console.log(DEBUG_PREFIX, 'data BEFORE processing', data)
-        data = extractIds(data)
 
-        DEBUG && console.log(DEBUG_PREFIX, 'data AFTER processing', data)
-        add(data)
+        const formData = new FormData()
+        formData.append('file',data.file)
+        DEBUG && console.log(DEBUG_PREFIX, 'data AFTER processing', formData)
+        add(formData)
     }
 
     useLayoutEffect(() => {
@@ -67,12 +68,12 @@ export const TasksForm: FC<IProps> = ({
         }}>
 
             <Grid container spacing={theme.spacing(2)}>
-                <Grid item xs={12} lg={6}>
-                    <AlexInput name={'name'} label={'Название'}
-                               error={Boolean(errors.name)} required
-                               errorText={errors.name?.message as string | undefined}/>
-                </Grid>
-                <Grid item xs={6} lg={0}/>
+                {/*<Grid item xs={12} lg={6}>*/}
+                {/*    <AlexInput name={'name'} label={'Название'}*/}
+                {/*               error={Boolean(errors.name)} required*/}
+                {/*               errorText={errors.name?.message as string | undefined}/>*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={6} lg={0}/>*/}
                 <Grid item xs={12} lg={6}>
                     <AlexDragAndDropFileUploader
                         name={'file'} supportedFileTypes={SUPPORTED_FILE_TYPES} required={true}/>

@@ -22,7 +22,7 @@ export const varsBehaviourMapTasks = (initialVars: any) => {
         ...(initialVars.page && {page: Number(initialVars.page)}),
         ...(initialVars.perPage && {size: Number(initialVars.perPage)}),
         ...(initialVars.sort && {sort: resSort}),
-        ...(initialVars.simpleFilter && {filter: initialVars.simpleFilter}),
+        // ...(initialVars.simpleFilter && {filter: initialVars.simpleFilter}),
     } as ICamerasPayload
 
     console.debug('DEBUG MUTATED_VARS', mutatedVars)

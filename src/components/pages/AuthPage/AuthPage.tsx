@@ -44,11 +44,11 @@ export const AuthPage: React.FC<any> = () => {
                         <FormProvider {...methods} >
                             <Stack direction={'column'} justifyContent={'center'} spacing={2}>
                                 <AlexInput name={'email'} required label={'Почта'}
-                                           error={Boolean(errors.email)}
+                                           error={Boolean(errors.email)} defaultValue={'admin@admin.com'}
                                            errorText={errors.email?.message as string | undefined}/>
 
                                 <AlexInput name={'password'} required label={'Пароль'} hidden
-                                           error={Boolean(errors.password)}
+                                           error={Boolean(errors.password)} defaultValue={'admin'}
                                            errorText={errors.email?.message as string | undefined}/>
 
                                 <Button size={'large'} variant="contained"
