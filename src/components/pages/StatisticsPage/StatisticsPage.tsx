@@ -18,72 +18,43 @@ export interface OptionAnal {
 const options: OptionAnal[] = [
     {
         type: 'chart',
-        name: 'Места размещения торговых точек',
-        subtitle: 'По суммарному объему покупок:',
+        name: 'Количество нарушений в каждой группе отходов',
+        subtitle: 'По сумме перевозок',
         data: [
             {
-                label: "В торговом центре",
-                value: 79.8
+                label: "Кирпич",
+                value: 76
             },
             {
-                label: "Рынок",
-                value: 19.8
+                label: "Грунт",
+                value: 20
             },
             {
-                label: "Магазин при учреждении",
-                value: 3
+                label: "Бетон",
+                value: 30
+            },
+            {
+                label: "Дерево",
+                value: 15
             },
         ]
     },
     {
         type: 'chart',
-        name: 'Распределение по ценовым нишам',
-        subtitle: 'По суммарному объему покупок:',
+        name: 'Распознавание нарушений по перевозке отходов',
+        subtitle: '',
         data: [
             {
-                label: "Премиум",
-                value: 3
+                label: "Выявлено",
+                value: 85
             },
             {
-                label: "Массовая",
-                value: 80
-            },
-            {
-                label: "Эконом",
-                value: 17
+                label: "Не выявлено",
+                value: 15
             },
         ]
     },
-    {
-        type: 'chart',
-        name: 'Размещение по отношению к потребителю',
-        subtitle: 'По суммарному объему покупок:',
-        data: [
-            {
-                label: "Рядом с домом",
-                value: 95
-            },
-            {
-                label: "Рядом с работой (учёбой)",
-                value: 5
-            },
-        ]
-    },
-    {
-        type: 'chart',
-        name: 'Сетевые и несетевые торговые точки',
-        subtitle: 'По суммарному объему покупок:',
-        data: [
-            {
-                label: "Рядом с домом",
-                value: 83
-            },
-            {
-                label: "Рядом с работой (учёбой)",
-                value: 17
-            },
-        ]
-    }
+
 ]
 
 export const StatisticsPage: FC = () => {
@@ -109,14 +80,14 @@ export const StatisticsPage: FC = () => {
             </Grid>
 
             <Typography variant={'h4'} margin={'55px 0 22px 0'}>
-                Характеристика потребления в разрезе доходных групп
+                Характеристика нарушений
             </Typography>
             <Paper elevation={0}>
                 <Stack direction={'column'} spacing={'40px'}>
                     <Box sx={{width: '100%', height: '5px', background: theme.palette.primary.light}}/>
                     <Stack direction={'column'} padding={"0 75px 100px 30px"} spacing={'40px'}>
                         <Stack direction={'row'} justifyContent={'space-between'}>
-                            <Typography variant={'h6'}>Доходные группы:</Typography>
+                            <Typography variant={'h6'}>Группы отходов:</Typography>
                             {incomeGroups.map((item, index) => {
                                 return (
                                     <TypographyPointed colorDot={colorPalette[index]}
@@ -315,15 +286,15 @@ const TypographyPointed: React.FC<TypographyPointedProps> = ({
     )
 }
 
-const incomeGroups: string[] = ['Высокодоходные', 'Среднеобеспеченные', 'Малообеспеченные', 'Низкодоходные']
+const incomeGroups: string[] = ['Бетон', 'Грунт', 'Дерево', 'Кирпич']
 const rationGroups = [
     {
-        label: 'Численность группы, % от общей численности',
-        data: [6, 54, 30, 10]
+        label: 'Соотношение выявленного отхода по камерам в процентах',
+        data: [20, 40, 30, 10]
     },
     {
-        label: 'Оборот группы, % от общей суммы',
-        data: [6, 57, 28, 9]
+        label: 'Количественный показатель, шт.',
+        data: [60, 120, 90, 30]
     }
 ]
 
@@ -340,7 +311,7 @@ interface ICharactersGroup {
 const charactersGroups: ICharactersGroup[] = [
     {
         label: {
-            text: 'Доля покупателей, %',
+            text: 'Доля проверенных машин, %',
         },
         data: [78, 63, 78, 78],
         typeSize: 'small',
@@ -348,7 +319,7 @@ const charactersGroups: ICharactersGroup[] = [
     },
     {
         label: {
-            text: 'Доля людей с высшим образованием, %',
+            text: 'Доля совпадения работы системы, %',
         },
         data: [70, 64, 58, 48],
         typeSize: 'small',
@@ -356,7 +327,7 @@ const charactersGroups: ICharactersGroup[] = [
     },
     {
         label: {
-            text: 'Доля состоящих в браке, %',
+            text: 'Доля заполненных свалок, %',
         },
         data: [58, 57, 62, 61],
         typeSize: 'small',
@@ -364,8 +335,8 @@ const charactersGroups: ICharactersGroup[] = [
     },
     {
         label: {
-            text: 'Соотношение мужчин и женщин, %',
-            legend: ['Мужчины', 'Женщины']
+            text: 'Доля сезонности нарушений, %',
+            legend: ['Зима', 'Весна','Лето','Осень']
         },
         data: [40, 38, 35, 37],
         typeSize: 'small',
@@ -373,8 +344,8 @@ const charactersGroups: ICharactersGroup[] = [
     },
     {
         label: {
-            text: 'Распределение по должностям, %',
-            legend: ['Руководитель', 'Специалист', 'Рабочий']
+            text: 'Доля округов и районов с макс. количеством нарушений в г. Москва, %',
+            legend: ['Южный округ','Северный округ','Западный округ']
         },
         data: [[33, 37, 30], [19, 40, 41], [30, 25, 15], [15, 33, 52]],
         typeSize: 'large',
@@ -382,14 +353,14 @@ const charactersGroups: ICharactersGroup[] = [
     },
     {
         label: {
-            text: 'Распределение по возрастным группам, %',
-            legend: ['до 29 лет', '30-39 лет', '40-49 лет', '50 лет и старше']
+            text: 'Доля округов и районов с мин. количеством нарушений в г. Москва, %',
+            legend: ['Юго-Восточный округ','Восточный округ','Центральный округ']
         },
-        data: [[13, 41, 23, 23], [15, 37, 27, 79], [14, 40, 26, 20], [17, 34, 24, 25]],
+        data: [[33, 37, 30], [19, 40, 41], [30, 25, 15], [15, 33, 52]],
         typeSize: 'large',
         typeColor: 'local'
     },
 ]
 
-const colorPalette = [theme.palette.primary.dark, theme.palette.primary.light, theme.palette.secondary.dark, theme.palette.secondary.light]
+const colorPalette = [theme.palette.primary.main, theme.palette.secondary.main, theme.palette.primary.dark, theme.palette.secondary.light]
 

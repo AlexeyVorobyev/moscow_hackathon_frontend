@@ -26,3 +26,12 @@ export interface IRefreshResponse {
 export interface IRefreshPayload {
     refreshToken: string
 }
+
+export interface IMeEntity {
+    containPassword: true,
+    mail: string,
+    name: string,
+    surname: string,
+    patronymic: string,
+    uuid: string
+}

@@ -23,11 +23,18 @@ export const authApi = api.injectEndpoints({
                 body
             }),
         }),
+        me: builder.query({
+            query: () => ({
+                url: `/profile/me`,
+                method: 'GET',
+            }),
+        }),
     }),
     overrideExisting: false
 })
 
 export const {
     useAuthMutation,
-    useRefreshMutation
+    useRefreshMutation,
+    useMeQuery
 } = authApi

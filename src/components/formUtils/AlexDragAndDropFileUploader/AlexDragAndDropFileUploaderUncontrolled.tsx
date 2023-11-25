@@ -1,7 +1,7 @@
 import {FC, useState} from 'react'
 import {FileUploader} from 'react-drag-drop-files'
 import {Stack, Typography} from '@mui/material'
-import {theme} from '../Theme/theme'
+import {theme} from '../../Theme/theme'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
 interface IProps {
@@ -47,12 +47,18 @@ export const AlexDragAndDropFileUploaderUncontrolled: FC<IProps> = ({
                    sx={{
                        padding: '60px 0 40px 0',
                        width: '100%',
+                       height:'100%',
                        boxSizing: 'border-box',
                        border: '2px dashed #D8E2EE',
                        borderRadius: '5px',
+                       '&:hover': {
+                           cursor:'pointer'
+                       }
                    }}>
                 {!isError && (<>
-                    <CloudUploadIcon/>
+                    <CloudUploadIcon style={{
+                        color:theme.palette.secondary.main
+                    }}/>
                     <Typography variant={'h6'}>
                         Переместите файлы сюда
                         <br/>
@@ -61,12 +67,12 @@ export const AlexDragAndDropFileUploaderUncontrolled: FC<IProps> = ({
                 </>)}
                 {isError && (
                     <Typography variant={'subtitle1'}>
-                        Wrong type of file, try another one
+                        Неправильное расширение файла
                     </Typography>
                 )}
                 {value !== undefined && (
                     <Typography variant={'subtitle1'}>
-                        file uploaded successfully!
+                        Файл успешно загружен!
                     </Typography>
                 )}
             </Stack>

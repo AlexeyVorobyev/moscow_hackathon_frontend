@@ -7,6 +7,7 @@ import {useNavigate, useSearchParams} from 'react-router-dom'
 import {extractIds} from '../../functions/extractIds'
 import {ITaskPostPutPayload} from '../../../redux/api/types/task'
 import {useTasksPostMutation} from '../../../redux/api/tasks.api'
+import {AlexDragAndDropFileUploader} from '../../formUtils/AlexDragAndDropFileUploader/AlexDragAndDropFileUploader'
 
 interface IProps {
     setOnSubmitFunc: React.Dispatch<React.SetStateAction<{ callback: ((data: any) => void) | null }>>
@@ -15,6 +16,7 @@ interface IProps {
 
 const DEBUG = true
 const DEBUG_PREFIX = 'TASK_FORM'
+const SUPPORTED_FILE_TYPES = ['JPG', 'MP4']
 
 export const TasksForm: FC<IProps> = ({
                                           setOnSubmitFunc,
@@ -29,15 +31,15 @@ export const TasksForm: FC<IProps> = ({
 
     const add = (data: ITaskPostPutPayload) => {
         DEBUG && console.log(DEBUG_PREFIX, 'data ADD', data)
-        addTask({body: data})
-            .then((response) => {
-                console.log(DEBUG_PREFIX, 'promise response', response)
-                if (searchParams.get('from')) {
-                    navigate(JSON.parse(searchParams.get('from')!))
-                } else {
-                    navigate('./../table')
-                }
-            })
+        // addTask({body: data})
+        //     .then((response) => {
+        //         console.log(DEBUG_PREFIX, 'promise response', response)
+        //         if (searchParams.get('from')) {
+        //             navigate(JSON.parse(searchParams.get('from')!))
+        //         } else {
+        //             navigate('./../table')
+        //         }
+        //     })
     }
 
     const onSubmit = (data: any) => {
@@ -63,21 +65,18 @@ export const TasksForm: FC<IProps> = ({
             padding: theme.spacing(2),
             boxSizing: 'border-box'
         }}>
+
             <Grid container spacing={theme.spacing(2)}>
-                <Grid item xs={6}>
+                <Grid item xs={12} lg={6}>
                     <AlexInput name={'name'} label={'Название'}
                                error={Boolean(errors.name)} required
                                errorText={errors.name?.message as string | undefined}/>
                 </Grid>
-                <Grid item xs={6}>
-                    <AlexInput name={'garbageType'} label={'Вид свалки'}
-                               error={Boolean(errors.garbageType)} required
-                               errorText={errors.garbageType?.message as string | undefined}/>
+                <Grid item xs={6} lg={0}/>
+                <Grid item xs={12} lg={6}>
+                    <AlexDragAndDropFileUploader
+                        name={'file'} supportedFileTypes={SUPPORTED_FILE_TYPES} required={true}/>
                 </Grid>
-                <Grid item xs={6}>
-                    <AlexInput name={'photo'} label={'Фото (ссылка)'}/>
-                </Grid>
-                <Grid item xs={6}/>
             </Grid>
         </Box>
     </Box>)

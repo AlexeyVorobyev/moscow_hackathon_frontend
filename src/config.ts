@@ -15,8 +15,8 @@ interface I_CONFIG {
 
 export const CONFIG: I_CONFIG = {
     mapBoundsDebounce: Number(import.meta.env.VITE_APP_MAP_BOUNDS_DEBOUNCE) || 800,
-    defaultMapLat: Number(import.meta.env.VITE_APP_DEFAULT_MAP_LAT) || 45,
-    defaultMapLon: Number(import.meta.env.VITE_APP_DEFAULT_MAP_LON) || 45,
+    defaultMapLat: Number(import.meta.env.VITE_APP_DEFAULT_MAP_LAT) || 55.75,
+    defaultMapLon: Number(import.meta.env.VITE_APP_DEFAULT_MAP_LON) || 37.5,
     defaultMapZoom: Number(import.meta.env.VITE_APP_DEFAULT_MAP_ZOOM) || 8,
     mapMaxZoom: Number(import.meta.env.VITE_APP_MAX_MAP_ZOOM) || 15,
     mapMinZoom: Number(import.meta.env.VITE_APP_MIN_MAP_ZOOM) || 2,
